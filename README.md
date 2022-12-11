@@ -1,36 +1,97 @@
-## Discord VK Music RPC
-Отображение текущего трека из VK в профиле Discord
+# VK to Discord
 
-#### Инструкция
+**Показывает текущую проигрываемую песню, как активность в Discord.**  
+(*Display your current listen to a song from VK status.*)
 
-**_Подготовка:_**
+## Установка (Installation)
 
-`Все, что здесь написано является ОБЯЗАТЕЛЬНЫМ, и без этого приложение не будет работать`
-1. В настройках статуса выставьте галочку "Транслировать музыку в статус"  
-![Галочка в статусе](./assets/1.png)  
-2. Создайте приложение по [этой ссылке](https://vk.com/apps?act=manage)  
-![Создание приложения](./assets/2.png)  
-3. Скопируйте сервисный ключ доступа и сохраните его где-нибудь, он нам еще понадобится  
-![Сервисный ключ доступа - 1 шаг](./assets/3_1.png)  
-![Сервисный ключ доступа - 2 шаг](./assets/3_2.png)  
-![Сервисный ключ доступа - 3 шаг](./assets/3_3.png)  
-4. Скопируйте вашу ссылку на страницу в ВК после vk.com (или же ваш ID) и сохраните её  
-![Ссылка на страницу](./assets/4.png)  
-5. Отредактируйте файл config.ini (замените все на то, что написано). Пример (файл config_example.ini) -  
-![Конфигурация](./assets/5.png)  
-_id = Ваша короткая ссылка на страницу, которую мы получили в шаге номер 4_  
-_app_token = Токен вашего приложения, который мы получили в шаге номер 3_  
+1. **Клонируем репозиторий** (*Clone repository*)
 
-**_Запуск:_**  
-Windows:  
-1. Установите [Python 3.7](https://www.python.org/ftp/python/3.7.2/python-3.7.2-amd64.exe)  
-**`ВНИМАНИЕ - Поставьте галочку "Add to PATH"`**   
-2. Запустите start.bat (если окно открывается и сразу закрывается - перезагрузите компьютер)
+    ```bash
+    git clone https://github.com/TheDarkFireDesu/VKToDiscord-Python.git
+    ```
 
-Linux:  
-1. Установите Python 3.7 (команда для Debian-подобных систем: `sudo apt-get install python3.7`)  
-2. Установите зависимости из requirements.txt (пример команды: `sudo pip3 install -r requirements.txt`)  
-3. Выполните команду `python3 main.py` (если у вас несколько версий Python 3 - замените последнюю цифру на версию, которая позднее или является 3.6)  
+2. **Переходим в папку с репозиторием** (*Go to VKToDiscord-Python folder*)
 
-Пример Rich Presence в профиле:  
-![Пример Rich Presence](./assets/example.png)
+    ```bash
+    cd VKToDiscord-Python
+    ```
+
+3. **Установливаем зависимости при помощью pip** (*Install libraries using pip*)
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## Настройка (Setting up)
+
+1. **Заполним файл конфигурации settings.py** (*Fill in the config*)
+
+    ```json
+    {
+        "id": "",
+        "app_id": "",
+        "app_token": "",
+        "language": ""
+    }
+    ```
+
+2. **Получение ID**
+
+    - Переходи на свою страницу ВК.
+    - Заходим в свой профиль.
+    - Копируем из адресной строки свой ID (*example: user293932 или dkawdkoe*).
+    - Вставляем в поле id, сохраняя кавычки.
+
+3. **Получение APP_ID**
+
+    - Переходим в Dashboard Discord: [link](https://discord.com/developers/applications)
+    - Создаем приложение.
+    - Копируем Application ID.
+    - Вставляем в поле app_id.
+
+4. **Получение APP_TOKEN**
+
+    - Переходим в «для разработчиков» в ВК: [link](https://dev.vk.com)
+    - Создаем приложение.
+    - В настройках приложения ищем поле «Сервисный ключ доступ».
+    - Копируем его.
+    - Вставляем в поле app_token.
+
+5. **Изменение локализации**
+
+    Локализация поддерживается посредством JSON. Обязательны для заполнения поля state, title, artist. (Русский = ru-RU)
+
+    ```json
+    {
+        "language": "",
+        "author": "",
+        "link": "",
+
+        "state": "",
+        "title": "",
+        "artist": ""
+    }
+    ```
+
+## Запуск (Start)
+
+```bash
+python main.py
+```
+
+## ЧаВО (FAQ)
+
+1. **Библиотеки** (*Used libraries*)
+    - vk_api
+        - [github.com](https://github.com/python273/vk_api)
+    - pypresence
+        - [github.com](https://github.com/qwertyquerty/pypresence)
+
+2. **Отличия от оригинала** (Diffences from original)
+    - Отсутствие configparser, chardet, виртуального окружения, захардкоженного app_id, если не хотите, используйте app_id автора оригинала - "543726720289734656"
+    - Поддержка локализации и настроек через JSON, логгирование.
+
+3. **Авторство** (*Credits*)
+    - [D3rise](https://github.com/D3rise) - автор оригинала.
+    - [d1rknwh1te3](https://github.com/d1rknwh1te3) - скромнейший форкнувший чел.
