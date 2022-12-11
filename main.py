@@ -3,17 +3,13 @@ import time
 import pypresence
 import vk_api
 
-from settings import init_setting
-from settings import select_language
 from log import logout
+from settings import init_setting, select_language
 
 def run():
     try:
         settings = init_setting()
         language = select_language(settings['language'])
-        
-        logout(settings, 0)
-        logout(language, 0)
         
         presence = pypresence.Presence(settings['app_id'])
         presence.connect()
@@ -45,7 +41,7 @@ def run():
 
                 state = f"{language['artist']} - {curr_music['artist']}"
                 details = f"{language['title']} - {curr_music['title']}"
-                logout(curr_music['artist'] + ' - ' + curr_music['title'], 1) # LOG
+                logout(curr_music['artist'] + ' - ' + curr_music['title'], 1) # LOGGING
                 
                 if 'album' in curr_music and 'thumb' in curr_music['album']:
                     large_image = curr_music["album"]["thumb"]["photo_300"]
@@ -57,7 +53,7 @@ def run():
             presence.update(**activity)
             time.sleep(15)
     except OSError:
-        logout(1, 2)
+        logout(0, 2) # LOGGING
         run()
 
 if __name__ == "__main__":
